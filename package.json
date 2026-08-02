@@ -1,0 +1,43 @@
+{
+  "name": "stellastatus",
+  "version": "0.1.0",
+  "description": "스텔라이브 멤버의 치지직 방송 상태와 방송 스케줄(뱅온정보)을 조회하는 라이브러리",
+  "type": "module",
+  "main": "./src/index.js",
+  "exports": {
+    ".": "./src/index.js",
+    "./channels": "./src/channels.js",
+    "./parser": "./src/parser.js"
+  },
+  "files": [
+    "src",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "test": "node live-test.js",
+    "example": "node examples/basic.js"
+  },
+  "keywords": [
+    "chzzk",
+    "치지직",
+    "stellive",
+    "스텔라이브",
+    "stellight",
+    "schedule",
+    "vtuber"
+  ],
+  "author": "정타비사랑해 <test.soft21c@gmail.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tabiluv/stellastatus.git"
+  },
+  "bugs": {
+    "url": "https://github.com/tabiluv/stellastatus/issues"
+  },
+  "homepage": "https://github.com/tabiluv/stellastatus#readme",
+  "engines": {
+    "node": ">=18"
+  }
+}

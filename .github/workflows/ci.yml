@@ -1,0 +1,18 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      # 인증키 없이 모듈이 정상 로드되는지만 확인한다(실 API 호출 없음).
+      - name: Load modules
+        run: node -e "import('./src/index.js').then((m) => console.log(Object.keys(m)))"
