@@ -68,7 +68,7 @@ const chzzk = new ChzzkClient(); // public 모드
 
 ### 동작 모드
 
-**`public` (기본)** — 치지직 내부 API(`api.chzzk.naver.com`)를 사용합니다. 인증키가 필요 없고, 채널별 라이브 상세를 직접 조회합니다. 공식 문서가 없는 비공개 엔드포인트이므로 응답 구조가 예고 없이 바뀌거나 차단될 수 있습니다. 개인·비상업 용도를 전제로 합니다.
+**`public` (기본)** — 인증키가 필요 없고, 채널별 라이브 상세를 직접 조회합니다.
 
 **`official` (선택)** — 치지직 공식 오픈 API(`openapi.chzzk.naver.com`)를 사용합니다. Client-Id와 Client-Secret이 필요합니다.
 
@@ -223,14 +223,6 @@ import { extractArtistSection, clean } from 'stellastatus/parser';
 ```
 
 `stripHtml`, `decodeEntities`, `clean`, `extractArtistSection`, `extractAllArtistSections` 를 포함합니다.
-
-## 실 테스트
-
-```bash
-npm test   # = node live-test.js
-```
-
-치지직 `public` 모드와 스케줄은 키 없이 바로 동작합니다. 치지직 `official` 모드를 테스트하려면 `live-test.js` 상단의 키를 채우시면 됩니다.
 
 ## 제작
 

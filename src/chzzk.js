@@ -9,16 +9,9 @@ const OFFLINE_MESSAGE = '방송 정보가 없습니다 (오프라인)';
  * 치지직 방송 상태 클라이언트.
  *
  * 두 가지 동작 모드를 지원한다.
- *
- * - 'public'(기본): 치지직 내부 API(api.chzzk.naver.com)를 사용한다. 인증키가 필요 없고
- *   채널별 라이브 상세(제목/카테고리/썸네일/시청자수)를 직접 조회한다. 공식 문서가 없는
- *   비공개 엔드포인트이므로 응답 구조 변경이나 차단 가능성이 있다.
- *
- * - 'official': 치지직 공식 오픈 API(openapi.chzzk.naver.com)를 사용한다. Client-Id와
- *   Client-Secret이 필요하다. 공식 API에는 특정 채널의 라이브 상태를 직접 조회하는
- *   엔드포인트가 없으며, 시청자 수 상위 순으로 정렬된 전체 라이브 목록(GET /open/v1/lives,
- *   페이지당 최대 20개)만 제공한다. 따라서 이 모드에서는 라이브 목록을 순회하여 로스터의
- *   채널을 매칭한다. maxPages 범위를 벗어난 채널은 오프라인으로 간주될 수 있다.
+ * - 'public'(기본): 인증키 없이 채널별 라이브 상세(제목/카테고리/썸네일/시청자수)를 조회한다.
+ * - 'official': 치지직 공식 오픈 API를 사용한다. Client-Id/Client-Secret이 필요하며,
+ *   전체 라이브 목록을 순회하여 로스터의 채널을 매칭한다.
  */
 export class ChzzkClient {
   /**
@@ -95,7 +88,6 @@ export class ChzzkClient {
 
   _resolveThumbnail(templateUrl) {
     if (!templateUrl) return null;
-    // 라이브 썸네일 URL은 "..._{type}.jpg" 형태의 템플릿이다. {type}을 해상도로 치환한다.
     return templateUrl.replace('{type}', String(this.thumbnailResolution));
   }
 
@@ -151,7 +143,7 @@ export class ChzzkClient {
   }
 
   /**
-   * 치지직 채널 검색. 'public' 모드에서만 지원한다(내부 API).
+   * 치지직 채널 검색. 'public' 모드에서만 지원한다.
    * @param {string} keyword
    * @param {{ size?: number }} [options]
    */
@@ -275,7 +267,6 @@ export class ChzzkClient {
 
     if (this.mode === 'official') {
       const map = await this._officialLiveMap();
-      // 라이브 맵을 재사용하므로 추가 요청 없이 동기적으로 매핑된다.
       return Promise.all(
         roster.map((ch) =>
           this.getLiveStatusByChannelId(ch.id, { key: ch.key, name: ch.name }, map),

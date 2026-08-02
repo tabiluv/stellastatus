@@ -6,17 +6,7 @@ const DEFAULT_UA = 'stellastatus';
 /**
  * 스텔라이브 방송 스케줄(뱅온정보) 클라이언트.
  *
- * 데이터 출처: StelLight (https://stellight.fans)
- * StelLight의 공개 API(/api/v1)를 사용한다. StelLight 개발자가 API 활용을 공식적으로
- * 허용했으며, 별도의 인증키가 필요 없다.
- *
- * 유의:
- * - StelLight는 수익 없이 팬심으로 운영되는 서비스이므로, 서버에 부담이 갈 정도의
- *   과도한 요청/크롤링을 삼간다. (반복 조회 시 호출부에서 캐싱/간격 조절 권장)
- * - 데이터 출처(StelLight)를 사용자에게 표기하는 것을 권장한다.
- * - API 사용과 관련해 발생한 문제에 대해 StelLight는 책임지지 않는다.
- * - title은 '휴방', '휴방*', '늦방 or 휴방' 등 다양한 값을 가질 수 있으므로,
- *   제목만으로 방송 여부를 단정하지 않는다.
+ * 데이터 출처: StelLight (https://stellight.fans). 공개 API(/api/v1)를 사용하며 인증키가 필요 없다.
  */
 export class StellightClient {
   /**
@@ -179,7 +169,6 @@ export class StellightClient {
     if (stellarId != null) {
       items = await this.getSchedules({ after: start, before: end, stellarId });
     } else {
-      // stellarId를 못 찾은 경우 이름으로 필터(로스터 밖 표기 등)
       const all = await this.getSchedules({ after: start, before: end });
       items = all.filter((s) => s.stellarName === name);
     }
